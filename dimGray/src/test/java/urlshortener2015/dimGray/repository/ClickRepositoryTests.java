@@ -5,10 +5,15 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType.HSQL;
-import static urlshortener2015.common.repository.fixture.ClickFixture.click;
-import static urlshortener2015.common.repository.fixture.ShortURLFixture.badUrl;
-import static urlshortener2015.common.repository.fixture.ShortURLFixture.url1;
-import static urlshortener2015.common.repository.fixture.ShortURLFixture.url2;
+import static urlshortener2015.dimGray.repository.fixture.ClickFixture.click;
+import static urlshortener2015.dimGray.repository.fixture.ShortURLFixture.badUrl;
+import static urlshortener2015.dimGray.repository.fixture.ShortURLFixture.url1;
+import static urlshortener2015.dimGray.repository.fixture.ShortURLFixture.url2;
+import urlshortener2015.dimGray.domain.Click;
+import urlshortener2015.dimGray.repository.ClickRepository;
+import urlshortener2015.dimGray.repository.ClickRepositoryImpl;
+import urlshortener2015.dimGray.repository.ShortURLRepository;
+import urlshortener2015.dimGray.repository.ShortURLRepositoryImpl;
 
 import org.junit.After;
 import org.junit.Before;
@@ -17,11 +22,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 
-import urlshortener2015.common.domain.Click;
-import urlshortener2015.common.repository.ClickRepository;
-import urlshortener2015.common.repository.ClickRepositoryImpl;
-import urlshortener2015.common.repository.ShortURLRepository;
-import urlshortener2015.common.repository.ShortURLRepositoryImpl;
 
 public class ClickRepositoryTests {
 

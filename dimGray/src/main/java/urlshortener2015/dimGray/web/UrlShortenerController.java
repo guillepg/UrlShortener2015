@@ -13,7 +13,6 @@ import urlshortener2015.dimGray.domain.Click;
 import urlshortener2015.dimGray.domain.ShortURL;
 import urlshortener2015.dimGray.repository.ClickRepository;
 import urlshortener2015.dimGray.repository.ShortURLRepository;
-
 import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
@@ -46,8 +45,7 @@ public class UrlShortenerController {
 	}
 
 	protected void createAndSaveClick(String hash, String ip) {
-		Click cl = new Click(null, hash, new Date(System.currentTimeMillis()),
-				null, null, null, ip, null);
+		Click cl = new Click(null, hash, new Date(System.currentTimeMillis()),null, null, null, ip, null);
 		cl=clickRepository.save(cl);
 		log.info(cl!=null?"["+hash+"] saved with id ["+cl.getId()+"]":"["+hash+"] was not saved");
 	}

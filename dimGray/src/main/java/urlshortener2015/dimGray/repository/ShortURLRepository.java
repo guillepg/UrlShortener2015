@@ -1,6 +1,6 @@
 package urlshortener2015.dimGray.repository;
 
-import urlshortener2015.common.domain.ShortURL;
+import urlshortener2015.dimGray.domain.ShortURL;
 
 import java.util.List;
 

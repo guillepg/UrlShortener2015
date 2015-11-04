@@ -1,7 +1,7 @@
 package urlshortener2015.dimGray.repository.fixture;
 
-import urlshortener2015.common.domain.Click;
-import urlshortener2015.common.domain.ShortURL;
+import urlshortener2015.dimGray.domain.Click;
+import urlshortener2015.dimGray.domain.ShortURL;
 
 public class ClickFixture {
 

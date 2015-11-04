@@ -1,7 +1,6 @@
 package urlshortener2015.dimGray.repository;
 
-import urlshortener2015.common.domain.Click;
-
+import urlshortener2015.dimGray.domain.Click;
 import java.util.List;
 
 public interface ClickRepository {
