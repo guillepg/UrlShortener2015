@@ -10,14 +10,14 @@ buildscript {
 
 eclipse {
    project {
-      name = 'UrlShortener2015.dim-gray'
+      name = 'UrlShortener2015.dimGray'
    }
 }
 
 apply plugin: 'eclipse-wtp'
 apply plugin: 'spring-boot'
 
-mainClassName = 'urlshortener2015.dim-gray.Application'
+mainClassName = 'urlshortener2015.dimGray.Application'
 
 dependencies {
     compile project(':common')
