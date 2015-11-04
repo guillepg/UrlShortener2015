@@ -1,14 +1,13 @@
-package urlshortener2015.demo.config;
+package urlshortener2015.dimGray.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
-
-import urlshortener2015.common.repository.ClickRepository;
-import urlshortener2015.common.repository.ClickRepositoryImpl;
-import urlshortener2015.common.repository.ShortURLRepository;
-import urlshortener2015.common.repository.ShortURLRepositoryImpl;
+import urlshortener2015.dimGray.repository.ClickRepository;
+import urlshortener2015.dimGray.repository.ClickRepositoryImpl;
+import urlshortener2015.dimGray.repository.ShortURLRepository;
+import urlshortener2015.dimGray.repository.ShortURLRepositoryImpl;
 
 @Configuration
 public class PersistenceContext {
