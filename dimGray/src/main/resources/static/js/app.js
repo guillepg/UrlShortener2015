@@ -2,6 +2,18 @@ $(document).ready(
     function() {
         $("#shortener").submit(
             function(event) {
+
+                $.ajax({
+                    url: 'www.google.com',
+                    success: function(result){
+                        alert('reply');
+                    },
+                    error: function(result){
+                        alert('timeout/error');
+                    }
+                });
+
+
                 event.preventDefault();
                 $.ajax({
                     type : "POST",
