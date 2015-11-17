@@ -1,0 +1,9 @@
+eclipse {
+   project {
+      name = "UrlShortener2015.DimGray.Application"
+   }
+}
+
+dependencies {
+   compile project(":common")
+}

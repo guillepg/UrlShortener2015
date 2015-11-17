@@ -8,6 +8,13 @@ buildscript {
   }
 }
 
+=======
+eclipse {
+   project {
+      name = 'UrlShortener2015.dimGray'
+   }
+}
+
 apply plugin: 'eclipse-wtp'
 apply plugin: 'spring-boot'
 
