@@ -1,0 +1,25 @@
+{
+  "name": "UrlShortener2015",
+  "version": "0.0.1",
+  "description": "Short your URI",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/guillepg/UrlShortener2015"
+  },
+  "author": "",
+  "dependencies": {
+    "angular": "^1.4.7",
+    "body-parser": "^1.14.1",
+    "express": "^4.13.3",
+    "mongoose": "^4.2.6",
+    "ui-router": "^0.2.15"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-concurrent": "^2.1.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-nodemon": "^0.4.0",
+    "jasmine": "^2.0.1"
+  }
+}
