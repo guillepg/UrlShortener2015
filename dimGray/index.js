@@ -19,10 +19,10 @@ var config = require("./backend/config");
 /* SERVER CONFIG */
 // -----------------------------------------------------------------------------
 var app  = express();                 // Initialise express application
-var port = process.env.PORT || 3000;  // Read PORT from environment or use 3000
+var port = config.port  // Read PORT from environment or use 3000
 
 /* Middleware setup (order does matter) */
-app.use(express.static(__dirname + '/public/dist')); // Set frontend files' path
+//app.use(express.static(__dirname + '/public/dist')); // Set frontend files' path
 // If we are not testing, set log level to 'dev'
 if (process.env.NODE_ENV != 'test') { app.use(morgan('dev')); }
 // Middleware that will allow us to decode request parameteres
@@ -45,9 +45,9 @@ function start() {
     });
 }
 function close() {
-    mongoose.connection.close(function() {
-        console.log('Terminating mongoose connection');
-    });
+    //mongoose.connection.close(function() {
+   //     console.log('Terminating mongoose connection');
+   // });
     console.log('Shutting down the server');
     server.close();
 };
