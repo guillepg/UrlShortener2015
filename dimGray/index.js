@@ -39,15 +39,15 @@ app.use(routes);
 // -----------------------------------------------------------------------------
 var server;
 function start() {
-  //  mongoose.connect(config.database);  // Connect to database through mongoose
+    mongoose.connect(config.dbTest);  // Connect to database through mongoose
     server = app.listen(port, function() {  // Start server activity
         console.log("Something beautiful is happening on port " + port);
     });
 }
 function close() {
-    //mongoose.connection.close(function() {
-   //     console.log('Terminating mongoose connection');
-   // });
+    mongoose.connection.close(function() {
+        console.log('Terminating mongoose connection');
+    });
     console.log('Shutting down the server');
     server.close();
 };

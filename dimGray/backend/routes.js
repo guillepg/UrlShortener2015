@@ -6,7 +6,7 @@
 
 var express = require('express');
 var crypto = require('crypto');
-
+var appFunctions = require('./handlers/functions');
 //var User    = require('./user-model');
 //var BookMarks = require('./bookmark-model');
 //var authMiddleware = require('./auth-middleware').basicMiddleware;
@@ -31,7 +31,8 @@ apiRoutes.get('/', function(req, res) {
 apiRoutes.route('/short')
     // Get status of a web
     .get(function(req, res){
-        res.json( crypto.createHash('sha1').update(req.param("urlToShort")).digest('hex'));
+       // res.json( crypto.createHash('sha1').update(req.param("urlToShort")).digest('hex'));
+        res.json(appFunctions.short(req.param("urlToShort")));
 
     });
 
