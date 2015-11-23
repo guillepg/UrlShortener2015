@@ -6,4 +6,26 @@ UrlDB = new mongoose.Schema({
     shortedUrl : { type: String, required: true, unique: true }
 });
 
-module.exports = mongoose.model('UrlDB', UrlDB);
+
+
+var UrlDB = mongoose.model('UrlDB', UrlDB);
+
+module.exports = {
+    add: function(urlToShort, callback){
+        var addUrl = new UrlDB(urlToShort);
+        addUrl.save(function(err){
+            callback(err, addUrl);
+        });
+    },
+    find: function(urlToFind, callback){
+        UrlDB.findOne({"shortedUrl": urlToFind}, function(err, res){
+            callback(err, res);
+        });
+    },
+
+    findAll: function(callback){
+        UrlDB.find({}, function(err, res){
+           callback(err,res)
+        });
+    }
+};

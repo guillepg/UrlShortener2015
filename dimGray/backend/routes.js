@@ -7,6 +7,7 @@
 var express = require('express');
 var crypto = require('crypto');
 var appFunctions = require('./handlers/functions');
+var db = require('./model/dbModel');
 //var User    = require('./user-model');
 //var BookMarks = require('./bookmark-model');
 //var authMiddleware = require('./auth-middleware').basicMiddleware;
@@ -27,14 +28,32 @@ apiRoutes.get('/', function(req, res) {
     res.json('Welcome to DimGray API');
 });
 
+
+
+apiRoutes.route('/shorted').
+
+    //getALl the shorted URIS
+    get(function(req, res){
+        db.findAll(function(err,result){
+            res.send(result);
+        });
+    })
+
+
+
 //url-shortener
 apiRoutes.route('/short')
-    // Get status of a web
-    .get(function(req, res){
-       // res.json( crypto.createHash('sha1').update(req.param("urlToShort")).digest('hex'));
-        res.json(appFunctions.short(req.param("urlToShort")));
 
-    });
+    .get(function(req, res){
+        var raelURl = req.param("urlToShort");
+        var shortedUrl = appFunctions.short(req.param("urlToShort"));
+        var json = {"realUrl":raelURl, "shortedUrl":shortedUrl};
+        db.add(json, function(err, result){
+            res.send(json);
+        });
+
+    })
+
 
 /* GLOBAL ROUTES */
 // API endpoints go under '/api' route. Other routes are redirected to
