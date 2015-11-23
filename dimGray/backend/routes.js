@@ -31,23 +31,21 @@ apiRoutes.get('/', function(req, res) {
 
 
 apiRoutes.route('/shorted').
-
     //getALl the shorted URIS
     get(function(req, res){
         db.findAll(function(err,result){
             res.send(result);
         });
+        appFunctions.checkURL("fe");
     })
-
-
 
 //url-shortener
 apiRoutes.route('/short')
 
     .get(function(req, res){
-        var raelURl = req.param("urlToShort");
+        var realURL = req.param("urlToShort");
         var shortedUrl = appFunctions.short(req.param("urlToShort"));
-        var json = {"realUrl":raelURl, "shortedUrl":shortedUrl};
+        var json = {"realUrl":realURL, "shortedUrl":shortedUrl};
         db.add(json, function(err, result){
             res.send(json);
         });

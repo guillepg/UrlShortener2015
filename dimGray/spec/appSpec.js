@@ -23,7 +23,7 @@ describe("Web server", function() {
         server.close();  // After all server related tests, close the server
     });
 
-    it("the real URL and the shorted URL should return the same", function(done) {
+    xit("the real URL and the shorted URL should return the same", function(done) {
 
         var testUrl = "http://www.unizar.es";
         var shortedUrl =  appFunctions.short(testUrl);
