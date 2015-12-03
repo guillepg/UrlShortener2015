@@ -6,3 +6,5 @@
 /.idea/
 /*.xml/
 /.iml/
+.gitignore
+/dimGray/node_modules

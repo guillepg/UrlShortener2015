@@ -1,9 +1,12 @@
 include ":common"
 include ":demo"
+<<<<<<< HEAD
+include ":dimGray"
+=======
 include ":alizarin-crimson"
 include ":bangladesh-green"
 include ":candy-pink"
-include ":dim-gray"
+include ":dimGray"
 include ":eerie-black"
 include ":fuzzy-wuzzy"
 include ":golden-brown"
@@ -12,3 +15,4 @@ include ":imperial-red"
 include ":japanese-violet"
 include ":lavender-gray"
 include ":navajo-white"
+>>>>>>> 004609db2fa6e77260750bb97a1ad3eedbf276d6
