@@ -1,6 +1,5 @@
 process.env.NODE_ENV = 'test';  // Set environment to testing
 var request = require('request');
-var config = require("../backend/config");
 var appFunctions = require("../backend/handlers/functions.js");
 
 describe("CeckStatus", function() {

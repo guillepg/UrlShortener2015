@@ -50,15 +50,22 @@ apiRoutes.route('/short')
 
     .get(function(req, res){
         var realURL = req.param("urlToShort");
-        var shortedUrl = appFunctions.short(req.param("urlToShort"));
-        var json = {"realUrl":realURL, "shortedUrl":shortedUrl};
-        db.add(json, function(err, result){
-            if(err)
-                db.find(shortedUrl, function(err, result){
-                   if(err) res.status(500).send("Error")  //Mejorar formato errores
-                   else res.send(result);
+        //check if the url is valid
+
+        appFunctions.checkURL(realURL, function(shorted){
+            if(shorted!=500 && shorted!=404){
+                var shortedUrl = appFunctions.short(req.param("urlToShort"));
+                var json = {"realUrl":realURL, "shortedUrl":shortedUrl};
+                db.add(json, function(err, result){
+                    if(err)
+                        db.find(shortedUrl, function(err, result){
+                            if(err) res.status(500).send("Error")  //Mejorar formato errores
+                            else res.send(result);
+                        });
+                    else res.send(json);
                 });
-            else res.send(json);
+            }
+            else res.status(500).send("Error")    //// MEJORAR
         });
     })
 
