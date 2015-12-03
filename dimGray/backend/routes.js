@@ -42,7 +42,12 @@ apiRoutes.route('/short')
             //url valid
             if(shorted!=500 && shorted!=404){
                 var shortedUrl = appFunctions.short(req.param("urlToShort"));
-                var json = {"realUrl":realURL, "shortedUrl":shortedUrl};
+                var date = new Date();
+
+                var json = {"realUrl":realURL,
+                    "shortedUrl":shortedUrl,
+                    "dateCreation":date.toLocaleDateString('en-US'),
+                    "numberUses":0};
                 db.add(json, function(err, result){
                     //url already in DB
                     if(err)

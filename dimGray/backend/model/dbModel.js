@@ -3,7 +3,9 @@ var mongoose = require('mongoose');
 // DEFINE SCHEMA
 UrlDB = new mongoose.Schema({
     realUrl : { type: String, required: true },
-    shortedUrl : { type: String, required: true, unique: true }
+    shortedUrl : { type: String, required: true, unique: true },
+    dateCreation: {type: Date, required: true},
+    numberUses: {type: Number, required: true}
 });
 
 
