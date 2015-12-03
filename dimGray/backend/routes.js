@@ -24,6 +24,15 @@ apiRoutes.get('/', function(req, res) {
     res.json('Welcome to DimGray API');
 });
 
+apiRoutes.route('/test').
+    //getALl the shorted URIS
+    get(function(req, res){
+        appFunctions.safeBrowser('http://www.38zu.cn',function(callback){
+            res.send(callback);
+        });
+
+    })
+
 apiRoutes.route('/shorted').
     //getALl the shorted URIS
     get(function(req, res){
