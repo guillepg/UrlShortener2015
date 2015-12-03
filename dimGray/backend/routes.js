@@ -28,6 +28,13 @@ apiRoutes.get('/', function(req, res) {
     res.json('Welcome to DimGray API');
 });
 
+apiRoutes.route("/test").
+    get(function(req,res){
+
+       appFunctions.checkURL("htt://www.unizar.es", function(shorted){
+           res.send(shorted);
+       });
+    })
 
 
 apiRoutes.route('/shorted').
@@ -36,7 +43,6 @@ apiRoutes.route('/shorted').
         db.findAll(function(err,result){
             res.send(result);
         });
-        appFunctions.checkURL("fe");
     })
 
 //url-shortener
@@ -47,9 +53,13 @@ apiRoutes.route('/short')
         var shortedUrl = appFunctions.short(req.param("urlToShort"));
         var json = {"realUrl":realURL, "shortedUrl":shortedUrl};
         db.add(json, function(err, result){
-            res.send(json);
+            if(err)
+                db.find(shortedUrl, function(err, result){
+                   if(err) res.status(500).send("Error")  //Mejorar formato errores
+                   else res.send(result);
+                });
+            else res.send(json);
         });
-
     })
 
 

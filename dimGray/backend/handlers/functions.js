@@ -1,6 +1,7 @@
 var request = require('request');
 var crypto = require('crypto');
 var http = require('http');
+var express = require ('express');
 
 module.exports = {
 
@@ -9,14 +10,15 @@ module.exports = {
     },
 
     checkURL: function(urlToCheck, callback){
-        var options = {
-            host: urlToCheck
 
-        };
-        http.get(urlToCheck, function(response) {
-            callback(response.statusCode);
-        });
+        if(urlToCheck.toString().substring(0,7) === "http://"){
+            http.get(urlToCheck, function(res) {
+                callback(res.statusCode);
+            });
+        }
+        else
+            callback("500");
+
 
     }
-
 };
