@@ -1,4 +1,4 @@
-package urlshortener2015.demo.config;
+package urlshortener2015.dimGray.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
