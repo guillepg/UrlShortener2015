@@ -31,7 +31,7 @@ apiRoutes.get('/', function(req, res) {
 apiRoutes.route("/test").
     get(function(req,res){
 
-       appFunctions.checkURL("htt://www.unizar.es", function(shorted){
+       appFunctions.checkURL("http://www.ThisIsAUnrecheableUrlForSure.cat", function(shorted){
            res.send(shorted);
        });
     })

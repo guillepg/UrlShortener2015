@@ -14,11 +14,13 @@ module.exports = {
         if(urlToCheck.toString().substring(0,7) === "http://"){
             http.get(urlToCheck, function(res) {
                 callback(res.statusCode);
+            }).on('error', function(error){
+                callback(404);
             });
         }
         else
-            callback("500");
+            callback(500);
 
-
+        ;
     }
 };
