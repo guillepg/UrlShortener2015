@@ -16,15 +16,16 @@ describe("Web server", function() {
         else server.start();
     });
     afterEach(function() {
-        server.close();  // After all server related tests, close the server
+       server.close();  // After all server related tests, close the server
     });
 
-    xit("the base URL shoudl return 200", function(done) {
+    it("the base URL shoudl return 200", function(done) {
         request(config.baseURL, function (error, response, body) {
-            expect(response.statusCode).toBe(200)
+                expect(response.statusCode).toBe(200);
+                done();
             }
         );
-        done();
+
     });
 
 });

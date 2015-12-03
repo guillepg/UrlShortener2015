@@ -3,14 +3,10 @@
 //  application.
 // =============================================================================
 
-
 var express = require('express');
 var crypto = require('crypto');
 var appFunctions = require('./handlers/functions');
 var db = require('./model/dbModel');
-//var User    = require('./user-model');
-//var BookMarks = require('./bookmark-model');
-//var authMiddleware = require('./auth-middleware').basicMiddleware;
 
 /* API ROUTES */
 var apiRoutes = express.Router();
@@ -28,15 +24,6 @@ apiRoutes.get('/', function(req, res) {
     res.json('Welcome to DimGray API');
 });
 
-apiRoutes.route("/test").
-    get(function(req,res){
-
-       appFunctions.checkURL("http://www.ThisIsAUnrecheableUrlForSure.cat", function(shorted){
-           res.send(shorted);
-       });
-    })
-
-
 apiRoutes.route('/shorted').
     //getALl the shorted URIS
     get(function(req, res){
@@ -47,18 +34,20 @@ apiRoutes.route('/shorted').
 
 //url-shortener
 apiRoutes.route('/short')
-
     .get(function(req, res){
         var realURL = req.param("urlToShort");
         //check if the url is valid
 
         appFunctions.checkURL(realURL, function(shorted){
+            //url valid
             if(shorted!=500 && shorted!=404){
                 var shortedUrl = appFunctions.short(req.param("urlToShort"));
                 var json = {"realUrl":realURL, "shortedUrl":shortedUrl};
                 db.add(json, function(err, result){
+                    //url already in DB
                     if(err)
                         db.find(shortedUrl, function(err, result){
+                            //unknow error
                             if(err) res.status(500).send("Error")  //Mejorar formato errores
                             else res.send(result);
                         });
