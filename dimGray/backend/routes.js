@@ -25,9 +25,9 @@ apiRoutes.get('/', function(req, res) {
 });
 
 apiRoutes.route('/test').
-    //getALl the shorted URIS
+    //Just for postman manually test
     get(function(req, res){
-        appFunctions.safeBrowser('http://www.38zu.cn',function(callback){
+        appFunctions.safeBrowser('http://google.com/',function(callback){
             res.send(callback);
         });
 

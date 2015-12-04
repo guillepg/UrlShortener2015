@@ -11,14 +11,12 @@ describe("CeckStatus", function() {
     });
 
     it("check a malware url should return malware", function(done) {
-        var malwareUrl = "http://www.38zu.cn";
-        appFunctions.safeBrowser(malwareUrl, function(body){
-            expect(body).toBe(200);
+        var malwareUrl = 'http://www.38zu.cn';
+        appFunctions.safeBrowser(malwareUrl, function(callback){
+            expect(callback).toBe('malware');
             done();
         });
-
-        done();
     });
-
+    
 });
 

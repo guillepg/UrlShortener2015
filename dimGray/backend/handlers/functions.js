@@ -30,18 +30,19 @@ var short = function(urlToShort){
 var safeBrowser = function(urlToCheck, callback){
 
     if(urlToCheck.toString().substring(0,7) === "http://"){
-        var url = "https://sb-ssl.google.com/safebrowsing/api/lookup?client=DimGray&key=AIzaSyC0ZNJJlGQNLPgwVmswzxYA_Hm1R-jko6Q&appver=1&pver=3.1&url="+urlToCheck;
+        var apikey = config.APIKEY
+        var url = "https://sb-ssl.google.com/safebrowsing/api/lookup?client=DimGray&key="+apikey+"&appver=1&pver=3.1&url="+urlToCheck;
 
         https.get(url, function(res) {
             res.on('data', function(d) {
-                callback(d);
+                callback(d.toString());
             });
         }).on('error', function(error){
-            callback(e);
+            callback("error 1"); //For the moment, must change
         });
     }
     else
-        callback(ee);
+        callback("error 2");  //For the moment, must change
 
 }
 
