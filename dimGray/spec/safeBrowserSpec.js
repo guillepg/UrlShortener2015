@@ -17,6 +17,35 @@ describe("CeckStatus", function() {
             done();
         });
     });
-    
+
+    it("check a phishing url should return phishing", function(done) {
+        var phishingUrl = 'http://conacct05.atspace.cc/account-confirm/';
+        appFunctions.safeBrowser(phishingUrl, function(callback){
+            expect(callback).toBe('phishing');
+            done();
+        });
+    });
+
+    it("check a not valid url should return notValidUrl", function(done) {
+        var notValidUrl = 'thisIsNotAValidUrl';
+        appFunctions.safeBrowser(notValidUrl, function(callback){
+            expect(callback).toBe('notValidUrl');
+            done();
+        });
+    });
+
+    xit("check a safe url should return timeOutError", function(done) {
+        //dont know why a valid and safe url return time out error and not 'ok' as google api say
+        var safeUrl = 'http://google.es';
+        appFunctions.safeBrowser(safeUrl, function(callback){
+            expect(callback).toBe('timeOutError');
+            done();
+        });
+    });
+
+
+
+
+
 });
 

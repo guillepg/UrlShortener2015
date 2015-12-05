@@ -42,7 +42,7 @@ var safeBrowser = function(urlToCheck, callback){
         });
     }
     else
-        callback("error 2");  //For the moment, must change
+        callback('notValidUrl');  //For the moment, must change
 
 }
 
