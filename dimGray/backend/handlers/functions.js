@@ -27,6 +27,7 @@ var short = function(urlToShort){
     return crypto.createHash('sha1').update(urlToShort).digest('hex');
 };
 
+//Still not work fine
 var safeBrowser = function(urlToCheck, callback){
 
     if(urlToCheck.toString().substring(0,7) === "http://"){

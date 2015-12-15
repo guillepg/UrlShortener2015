@@ -56,7 +56,7 @@ apiRoutes.route('/short')
                 var json = {"realUrl":realURL,
                     "shortedUrl":shortedUrl,
                     "dateCreation":date.toLocaleDateString('en-US'),
-                    "numberUses":0};
+                    "numberUses":1};
                 db.add(json, function(err, result){
                     //url already in DB
                     if(err)
@@ -70,6 +70,11 @@ apiRoutes.route('/short')
             }
             else res.status(500).send("Error")    //// MEJORAR
         });
+    })
+
+apiRoutes.route('/shortCSV')
+    .post(function(req,res){
+
     })
 
 
