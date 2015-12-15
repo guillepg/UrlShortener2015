@@ -3,12 +3,8 @@ var crypto = require('crypto');
 var http = require('http');
 var https = require('https');
 var express = require ('express');
-var SafeBrowse = require('safe-browse');
 var config = require("../config");
-
-
-//var safeBrowser = new SafeBrowse.Api(config.APIKEY);
-
+var CSVparse = require('csv-parse');
 
 var checkURL = function(urlToCheck, callback){
 
@@ -47,9 +43,18 @@ var safeBrowser = function(urlToCheck, callback){
 
 }
 
+var getCSVArray = function(csvFile, callback){
+    CSVparse(csvFile, {comment: '#'}, function(err, output){
+        if(!err){
+            callback(output[0]);
+        }
+    });
+}
+
 module.exports = {
 
     short: short,
     checkURL: checkURL,
-    safeBrowser: safeBrowser
+    safeBrowser: safeBrowser,
+    getCSVArray: getCSVArray
 };
