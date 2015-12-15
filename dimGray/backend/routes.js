@@ -63,7 +63,7 @@ apiRoutes.route('/short')
                         db.find(shortedUrl, function(err, result){
                             //unknow error
                             if(err) res.status(500).send("Error")  //Mejorar formato errores
-                            else res.send(result);
+                            else res.send(result); //falta sumar 1 a numberUses
                         });
                     else res.send(json);
                 });
@@ -74,6 +74,22 @@ apiRoutes.route('/short')
 
 apiRoutes.route('/shortCSV')
     .post(function(req,res){
+        var csvFile = req.body.csvFile;
+        //Just for test
+        var csvFile = "http://www.google.com,http://www.unizar.es";
+
+        appFunctions.getCSVArray(csvFile, function(callback){
+            //use index for get what urls fail
+            var index;
+            var test = "";
+            for (index = 0; index < callback.length; ++index) {
+                test += callback[index]+'\n';
+            }
+
+            res.send(test);
+
+        })
+
 
     })
 

@@ -31,6 +31,18 @@ describe("CsvParse", function() {
         })
 
     });
+    it("testing for each csv-parse with comments in csvFile", function(done){
+        var csv = "#comment in csv\na,b,c";
+        var csvArray = ["a","b","c"]
+        appFunctions.getCSVArray(csv, function(callback){
+            var index;
+            for (index = 0; index < callback.length; ++index) {
+                expect(csvArray[index]).toEqual(callback[index]);
+            }
+            done();
+        })
+
+    });
 
 });
 
