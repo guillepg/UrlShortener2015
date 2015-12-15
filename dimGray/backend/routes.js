@@ -25,9 +25,9 @@ apiRoutes.get('/', function(req, res) {
 });
 
 apiRoutes.route('/test').
-    //getALl the shorted URIS
+    //Just for postman manually test
     get(function(req, res){
-        appFunctions.safeBrowser('http://www.38zu.cn',function(callback){
+        appFunctions.safeBrowser('http://google.com/',function(callback){
             res.send(callback);
         });
 
@@ -56,20 +56,41 @@ apiRoutes.route('/short')
                 var json = {"realUrl":realURL,
                     "shortedUrl":shortedUrl,
                     "dateCreation":date.toLocaleDateString('en-US'),
-                    "numberUses":0};
+                    "numberUses":1};
                 db.add(json, function(err, result){
                     //url already in DB
                     if(err)
                         db.find(shortedUrl, function(err, result){
                             //unknow error
                             if(err) res.status(500).send("Error")  //Mejorar formato errores
-                            else res.send(result);
+                            else res.send(result); //falta sumar 1 a numberUses
                         });
                     else res.send(json);
                 });
             }
             else res.status(500).send("Error")    //// MEJORAR
         });
+    })
+
+apiRoutes.route('/shortCSV')
+    .post(function(req,res){
+        var csvFile = req.body.csvFile;
+        //Just for test
+        var csvFile = "http://www.google.com,http://www.unizar.es";
+
+        appFunctions.getCSVArray(csvFile, function(callback){
+            //use index for get what urls fail
+            var index;
+            var test = "";
+            for (index = 0; index < callback.length; ++index) {
+                test += callback[index]+'\n';
+            }
+
+            res.send(test);
+
+        })
+
+
     })
 
 
