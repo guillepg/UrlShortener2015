@@ -30,7 +30,6 @@ apiRoutes.route('/test').
         appFunctions.safeBrowser('http://google.com/',function(callback){
             res.send(callback);
         });
-
     })
 
 apiRoutes.route('/shorted').
@@ -103,5 +102,6 @@ routes.get('*', function(req, res) {
     console.log(__dirname);
     res.sendFile('index.html', {'root': 'public/src'});
 });
+
 
 module.exports = routes;
