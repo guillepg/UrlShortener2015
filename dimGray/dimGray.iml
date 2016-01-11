@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<<<<<<< HEAD
 <module external.linked.project.id=":dim-gray" external.linked.project.path="$MODULE_DIR$" external.root.project.path="$MODULE_DIR$/.." external.system.id="GRADLE" external.system.module.group="UrlShortener2015" external.system.module.version="unspecified" type="JAVA_MODULE" version="4">
   <component name="NewModuleRootManager" inherit-compiler-output="false">
     <output url="file://$MODULE_DIR$/../dim-gray/build/classes/main" />
@@ -14,11 +13,6 @@
       <excludeFolder url="file://$MODULE_DIR$/../dim-gray/build" />
     </content>
     <orderEntry type="inheritedJdk" />
-=======
-<module type="JAVA_MODULE" version="4">
-  <component name="NewModuleRootManager" inherit-compiler-output="true">
-    <exclude-output />
->>>>>>> 5b417c3929a570c482340b8ce0017a69e1faf29e
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>
