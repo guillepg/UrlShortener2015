@@ -48,26 +48,30 @@ apiRoutes.route('/short')
 
         appFunctions.checkURL(realURL, function(shorted){
             //url valid
-            if(shorted!=500 && shorted!=404){
-                var shortedUrl = appFunctions.short(req.param("urlToShort"));
-                var date = new Date();
+            //appFunctions.safeBrowser(realURL,function(callback){
+                //res.send(callback);
+                if(shorted!=500 && shorted!=404){
+                    var shortedUrl = appFunctions.short(req.param("urlToShort"));
+                    var date = new Date();
 
-                var json = {"realUrl":realURL,
-                    "shortedUrl":shortedUrl,
-                    "dateCreation":date.toLocaleDateString('en-US'),
-                    "numberUses":1};
-                db.add(json, function(err, result){
-                    //url already in DB
-                    if(err)
-                        db.find(shortedUrl, function(err, result){
-                            //unknow error
-                            if(err) res.status(500).send("Error")  //Mejorar formato errores
-                            else res.send(result); //falta sumar 1 a numberUses
-                        });
-                    else res.send(json);
-                });
-            }
-            else res.status(shorted).send("Error "+shorted)    //// MEJORAR
+                    var json = {"realUrl":realURL,
+                        "shortedUrl":shortedUrl,
+                        "dateCreation":date.toLocaleDateString('en-US'),
+                        "numberUses":1};
+                    db.add(json, function(err, result){
+                        //url already in DB
+                        if(err)
+                            db.find(shortedUrl, function(err, result){
+                                //unknow error
+                                if(err) res.status(500).send("Error")  //Mejorar formato errores
+                                else res.send(result); //falta sumar 1 a numberUses
+                            });
+                        else res.send(json);
+                    });
+                }
+                else res.status(shorted).send("Error "+shorted)    //// MEJORAR
+            //});
+
         });
     })
 
@@ -79,6 +83,21 @@ apiRoutes.route('/stats')
              //url not in DB
             if(err) res.status(404).send("Error")
             else res.send(result);
+        });
+    })
+
+apiRoutes.route('/goto')
+    .get(function(req, res){
+        var shortURL = req.param("shortUrl");
+        //check if the url is valid
+        db.find(shortURL, function(err, result){
+             //url not in DB
+            if(err) res.status(404).send("Error")
+            else{
+                //http://localhost:3000/api/goto?shortUrl=e7847c6e7a9f533b763e949f66ca4ce867883bb0
+                var result2 = JSON.parse(result);
+                res.send(result2);
+            }
         });
     })
 

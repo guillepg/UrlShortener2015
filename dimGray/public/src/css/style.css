@@ -39,7 +39,7 @@ h1 {
 }
 .tablainfo{
 	top: 155;
-    left: 355;
+    left: 350;
     position: absolute;
     z-index: 1;
     visibility: show;

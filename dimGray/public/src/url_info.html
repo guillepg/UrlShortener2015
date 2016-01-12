@@ -1,35 +1,71 @@
 <html>
 <head>
+	<title>URLshortener</title>
 	<meta charset="UTF-8">
+
+	<!-- CSS imports -->
 	<link rel="stylesheet" type="text/css" href="css/style.css">
-	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.8.1/bootstrap-table.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+	<!-- Javascript imports -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
 
 	<script src="js/jquery.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.8.1/bootstrap-table.js"></script>
-	
+
+	<script src="js/home.js"></script>
 </head>
 <body>
+	<!-- Navigation Bar -->
+	<div class="container">
+		<nav class="navbar navbar-inverse">
+
+			<div class="navbar-header">
+				<a href="#" class="navbar-brand">URL Shortener</a>
+			</div>
+
+			<div id="navbarCollapse" class="collapse navbar-collapse">
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="#">Home</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="#" id="myBtn">Login</a></li>
+					<li><a href="#" id="myBtn2">Register</a></li>
+
+				</ul>
+			</div>
+		</nav>
+	</div>
+
 	<div class="tablainfo">
-		<div style="margin : 100px;">
-				<button class="btn-primary btn" onclick="load();" >Load Table</button>
-		</div>
-		<table class="table" id="table">
+
+		<button class="btn-primary btn" onclick="load();" >Load Table</button>
+		<table id="table">
 			<thead>
-				<tr>
-					<th data-field="short">URL acortada</th>
-					<th data-field="long">URL destino</th>
-					<th data-field="date">Fecha de creacion</th>
-					<th data-field="acc">Num. accesos</th>
-					<th data-field="status">Estado actual</th> <!-- Caída / No segura / Alcanzable-OK -->
-				</tr>
+			<tr>
+				<th data-field="short">URL acortada</th>
+				<th data-field="long">URL destino</th>
+				<th data-field="date">Fecha de creacion</th>
+				<th data-field="acc">Num. accesos</th>
+				<th data-field="status">Estado actual</th> <!-- Caída / No segura / Alcanzable-OK -->
+			</tr>
 			</thead>
 		</table>
+
 		
 		<script>
 			$('#table').bootstrapTable({});
 			function load(){
+				//$.getJSON('http://localhost:3000/api/stats?shortUrl=837e1ff8b5806c54e785bb9402f262a661f012dd', function(data) {});
+				var Httpreq = new XMLHttpRequest();
+				Httpreq.open("GET","http://localhost:3000/api/stats?shortUrl=837e1ff8b5806c54e785bb9402f262a661f012dd",true);
+				Httpreq.send();
+				var fich = Httpreq.responseText;
 				var data = [{
 						short: 'bit.ly/1',
 						long: 'facebook.com',
@@ -43,7 +79,7 @@
 						acc: 32,
 						status: 'No segura'
 					}]; 
-				$('#table').bootstrapTable("load", data);
+				$('#table').bootstrapTable("load", fich);
 			}
 		</script>
 		</br></br>
