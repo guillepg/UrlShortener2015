@@ -45,12 +45,13 @@
 	<div class="container-full">
 		<div class="row">
 			<div class="col-lg-12 text-center">
-								<form class="col-lg-12" id="shortener" action="">
+								<form class="col-lg-12" id="shortener" action="/api/short">
 					<div class="input-group input-group-lg col-sm-offset-4 col-sm-4">
 						<input type="text" class="center-block form-control input-lg"
-							title="Enter a URL" placeholder="Enter a URL" name="url">
-						<span class="input-group-btn"><button
-								class="btn btn-lg btn-primary" type="submit">Short me!</button></span>
+							title="Enter a URL" placeholder="Enter a URL" name="urlToShort">
+						<span class="input-group-btn">
+							<button class="btn btn-lg btn-primary" type="submit">Short me!</button>
+						</span>
 					</div>
 				</form>
 			</div>
@@ -70,12 +71,13 @@
 	<div class="container-full">
 		<div class="row">
 			<div class="col-lg-12 text-center">
-								<form class="col-lg-12" id="status" action="">
+								<form class="col-lg-12" id="status" action="/stats">
 					<div class="input-group input-group-lg col-sm-offset-4 col-sm-4">
 						<input type="text" class="center-block form-control input-lg"
-							title="Enter a shortened URL" placeholder="Enter a shortened URL" name="url">
-						<span class="input-group-btn"><button
-								class="btn btn-lg btn-primary" type="submit">Status</button></span>
+							title="Enter a shortened URL" placeholder="Enter a shortened URL" name="shortUrl">
+						<span class="input-group-btn">
+							<button class="btn btn-lg btn-primary" type="submit">Status</button>
+						</span>
 					</div>
 				</form>
 			</div>

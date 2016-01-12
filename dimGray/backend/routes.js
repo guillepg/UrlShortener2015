@@ -20,9 +20,9 @@ apiRoutes.use(function(req, res, next) {
 });
 
 // API entry point
-apiRoutes.get('/', function(req, res) {
+/*apiRoutes.get('/', function(req, res) {
     res.json('Welcome to DimGray API');
-});
+});*/
 
 apiRoutes.route('/test').
     //Just for postman manually test
@@ -67,7 +67,18 @@ apiRoutes.route('/short')
                     else res.send(json);
                 });
             }
-            else res.status(500).send("Error")    //// MEJORAR
+            else res.status(shorted).send("Error "+shorted)    //// MEJORAR
+        });
+    })
+
+apiRoutes.route('/stats')
+    .get(function(req, res){
+        var shortURL = req.param("shortUrl");
+        //check if the url is valid
+        db.find(shortURL, function(err, result){
+             //url not in DB
+            if(err) res.status(404).send("Error")
+            else res.send(result);
         });
     })
 
@@ -84,12 +95,8 @@ apiRoutes.route('/shortCSV')
             for (index = 0; index < callback.length; ++index) {
                 test += callback[index]+'\n';
             }
-
             res.send(test);
-
         })
-
-
     })
 
 
@@ -98,10 +105,17 @@ apiRoutes.route('/shortCSV')
 // index.html where AngularJS will handle frontend routes.
 var routes = express.Router();
 routes.use('/api', apiRoutes);
-routes.get('*', function(req, res) {
+routes.get('/', function(req, res) {
     console.log(__dirname);
     res.sendFile('index.html', {'root': 'public/src'});
 });
-
+routes.get('/css/style.css', function(req, res) {
+    console.log(__dirname);
+    res.sendFile('style.css', {'root': 'public/src/css'});
+});
+routes.get('/js/home.js', function(req, res) {
+    console.log(__dirname);
+    res.sendFile('home.js', {'root': 'public/src/js'});
+});
 
 module.exports = routes;
