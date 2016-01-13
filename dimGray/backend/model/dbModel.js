@@ -29,6 +29,13 @@ module.exports = {
 		})
 
     },
+    findLong: function(urlToFind, callback){
+		UrlDB.update({"realUrl": urlToFind}, {$inc: { numberUses: 1 }}, {upsert: true}, function(err){
+            UrlDB.findOne({"realUrl": urlToFind},{_id:0, __v:0}, function(err, res){
+                callback(err,res);
+            });
+        })
+    },
 
     findAll: function(callback){
         UrlDB.find({},{_id:0, __v:0}, function(err, res){

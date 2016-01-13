@@ -107,24 +107,37 @@ apiRoutes.route('/goto')
 
 apiRoutes.route('/shortCSV')
     .post(function(req,res){
-        var csvFile = "";
-        if(typeof req.body.file !== "undefined" ) csvFile=req.body.file;
-        else if(typeof req.body.text !== "undefined"  ) csvFile=req.body.text;
+        var csvFile = ""; var output = "";
+        if(typeof req.body.file !== "undefined" ){ csvFile=req.body.file; output+="(Leyendo de fichero) "+ typeof req.body.file;}
+        else if(typeof req.body.text !== "undefined"  ){ csvFile=req.body.text; output+="(Leyendo de texto) ";}
         else res.send("EMPTY");
 
         appFunctions.getCSVArray(csvFile, function(callback){
-            //use index for get what urls fail
+            //use index to get which urls fail
             var index;
-            var output = "CORRECTLY SHORTED: ";
+            output+= "CORRECTLY SHORTED: ";
             for (index = 0; index < callback.length; ++index) {
-                appFunctions.checkURL(callback[index], function(shorted){
+                output+="</br>PROBANDO "+callback[index];
+                testFunct(callback[index]);
+                output+=" salgo de test y reviso "+callback[index]+" - ";
+                db.findLong(callback[index],function(err, result){
+                    if(err) output+=" ERR "+result;
+                    else output+=" OK "+result;
+                });
+                output+=" END";
+                /*---------------------------------
+                var longurl = ""+callback[index];
+                appFunctions.checkURL(longurl, function(shorted){
+                    output+=" VALID ";
                     //url valid
-                    //appFunctions.safeBrowser(callback[index],function(callback){ // FALLA SAFEBROWSING
+                    //appFunctions.safeBrowser(longurl,function(callback2){ // FALLA SAFEBROWSING
                         if(shorted!=500 && shorted!=404){
-                            var shortedUrl = appFunctions.short(callback[index]);
+                            output+=" cod"+shorted;
+                            var shortedUrl = appFunctions.short(longurl);
+                            output+=" short"+shortedUrl;
                             var date = new Date();
                             var json = {
-                                "realUrl":callback[index],
+                                "realUrl":longurl,
                                 "shortedUrl":shortedUrl,
                                 "dateCreation":date.toLocaleDateString('en-US'),
                                 "numberUses":1};
@@ -134,22 +147,42 @@ apiRoutes.route('/shortCSV')
                                     db.find(shortedUrl, function(err, result){
                                         //unknow error
                                         if(err) ;
-                                        else{output+="long:"+callback[index]+",short:"+shortedUrl;}
+                                        else{output+="OK1";}
                                         //devuelve info existente
                                         //aqui sumaremos 1 al numero de usos
                                     });
                                 //new url, not existing in DB
-                                else output+="long:"+callback[index]+",short:"+shortedUrl;
+                                else output+="OK2";
                             });
                         }
-                        else res.status(shorted).send("Error "+shorted)    //// MEJORAR
+                        else output+="Error 500 en "+longurl;//res.status(shorted).send("Error "+shorted)    //// MEJORAR
                     //});
-                });
+                });*/
             }
             res.send(output);
         })
     })
 
+function testFunct(cadena){
+    appFunctions.checkURL(cadena, function(shorted){
+        //url valid
+        //appFunctions.safeBrowser(cadena,function(callback){ // FALLA SAFEBROWSING
+            if(shorted!=500 && shorted!=404){
+                var shortedUrl = appFunctions.short(cadena);
+                var date = new Date();
+                var json = {
+                    "realUrl":cadena,
+                    "shortedUrl":shortedUrl,
+                    "dateCreation":date.toLocaleDateString('en-US'),
+                    "numberUses":1};
+                db.add(json, function(err, result){
+                    //url already in DB
+                    if(err) db.find(shortedUrl, function(err, result){});
+                });
+            }
+        //});
+    });
+}
 
 /* GLOBAL ROUTES */
 // API endpoints go under '/api' route. Other routes are redirected to

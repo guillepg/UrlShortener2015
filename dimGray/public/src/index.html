@@ -114,7 +114,10 @@
 							xmlhttp.send();
 
 							var lTable = document.getElementById("table");
-							lTable.style.display = (lTable.style.display == "table") ? "none" : "table";
+							//lTable.style.display = (lTable.style.display == "table") ? "none" : "table";
+							if (lTable.style.display == "none" ) {
+							   lTable.style.display="table";
+						   }
 						}
 						function getJSON(){
 							var shrt = document.getElementById("corta").value;
