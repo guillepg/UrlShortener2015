@@ -1,0 +1,104 @@
+<html>
+<head>
+	<title>URLshortener</title>
+	<meta charset="UTF-8">
+
+	<!-- CSS imports -->
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.8.1/bootstrap-table.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+	<!-- Javascript imports -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
+
+	<script src="js/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.8.1/bootstrap-table.js"></script>
+
+	<script src="js/home.js"></script>
+</head>
+<body>
+	<!-- Navigation Bar -->
+	<div class="container">
+		<nav class="navbar navbar-inverse">
+
+			<div class="navbar-header">
+				<a href="#" class="navbar-brand">URL Shortener</a>
+			</div>
+
+			<div id="navbarCollapse" class="collapse navbar-collapse">
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="#">Home</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="#" id="myBtn">Login</a></li>
+					<li><a href="#" id="myBtn2">Register</a></li>
+
+				</ul>
+			</div>
+		</nav>
+	</div>
+
+	<div class="tablainfo">
+
+		<button class="btn-primary btn" onclick="load();" >Load Table</button>
+		<table id="table">
+			<thead>
+			<tr>
+				<th data-field="short">URL acortada</th>
+				<th data-field="long">URL destino</th>
+				<th data-field="date">Fecha de creacion</th>
+				<th data-field="acc">Num. accesos</th>
+				<th data-field="status">Estado actual</th> <!-- Caída / No segura / Alcanzable-OK -->
+			</tr>
+			</thead>
+		</table>
+
+		
+		<script>
+			$('#table').bootstrapTable({});
+			function load(){
+				var xmlhttp = new XMLHttpRequest();
+				var url = "http://localhost:3000/api/stats?shortUrl=837e1ff8b5806c54e785bb9402f262a661f012dd";
+
+				xmlhttp.onreadystatechange = function() {
+					if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+						var myArr = JSON.parse(xmlhttp.responseText);
+						myFunction(myArr);
+					}
+				};
+				xmlhttp.open("GET", url, true);
+				xmlhttp.send();
+
+				function myFunction(arr) {
+					var out = "";
+					var i;
+					//JSON.parse(arr);
+					//FALLA AQUÍ POR EL CARACTER RARO QUE DEVUELVE MONGODB
+					$('#table').bootstrapTable("load", JSON.parse(arr));
+				}
+
+
+				//	http://localhost:3000/api/stats?shortUrl=837e1ff8b5806c54e785bb9402f262a661f012dd
+				var data = [{
+						short: 'bit.ly/1',
+						long: 'facebook.com',
+						date: '07/01/2016',
+						acc: 3,
+						status: 'OK'
+					}, {
+						short: 'bit.ly/2',
+						long: 'finofilipino.org',
+						date: '07/01/2016',
+						acc: 32,
+						status: 'No segura'
+					}];
+			}
+		</script>
+		</br></br>
+	</div>
+</body>
+</html>

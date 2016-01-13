@@ -23,9 +23,8 @@ var short = function(urlToShort){
     return crypto.createHash('sha1').update(urlToShort).digest('hex');
 };
 
-//Still not work fine
+//Still not working fine
 var safeBrowser = function(urlToCheck, callback){
-
     if(urlToCheck.toString().substring(0,7) === "http://"){
         var apikey = config.APIKEY
         var url = "https://sb-ssl.google.com/safebrowsing/api/lookup?client=DimGray&key="+apikey+"&appver=1&pver=3.1&url="+urlToCheck;
@@ -40,7 +39,6 @@ var safeBrowser = function(urlToCheck, callback){
     }
     else
         callback('notValidUrl');  //For the moment, must change
-
 }
 
 var getCSVArray = function(csvFile, callback){
