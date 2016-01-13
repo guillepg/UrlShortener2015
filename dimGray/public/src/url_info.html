@@ -63,26 +63,18 @@
 			function load(){
 				var xmlhttp = new XMLHttpRequest();
 				var url = "http://localhost:3000/api/stats?shortUrl=837e1ff8b5806c54e785bb9402f262a661f012dd";
-
+				//URL DE TEST
 				xmlhttp.onreadystatechange = function() {
 					if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-						var myArr = JSON.parse(xmlhttp.responseText);
-						myFunction(myArr);
+						var myArr = JSON.parse(JSON.stringify(xmlhttp.responseText));
+						$('#table').bootstrapTable("load", JSON.parse(JSON.stringify(myArr)));
 					}
 				};
-				xmlhttp.open("GET", url, true);
+				xmlhttp.open("GET", url, false);
 				xmlhttp.send();
 
-				function myFunction(arr) {
-					var out = "";
-					var i;
-					//JSON.parse(arr);
-					//FALLA AQUÍ POR EL CARACTER RARO QUE DEVUELVE MONGODB
-					$('#table').bootstrapTable("load", JSON.parse(arr));
-				}
-
-
-				//	http://localhost:3000/api/stats?shortUrl=837e1ff8b5806c54e785bb9402f262a661f012dd
+				//	url fichero prueba: http://localhost:3000/api/stats?shortUrl=837e1ff8b5806c54e785bb9402f262a661f012dd
+				// http://www.comedycentral.es/cc-box/luis-alvaro-en-1-minuto/?pag=3&video=1053399,http://comediansincarsgettingcoffee.com/
 				var data = [{
 						short: 'bit.ly/1',
 						long: 'facebook.com',

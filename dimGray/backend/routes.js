@@ -97,7 +97,9 @@ apiRoutes.route('/goto')
                 //http://localhost:3000/api/goto?shortUrl=e7847c6e7a9f533b763e949f66ca4ce867883bb0
                 var result2 = JSON.stringify(result);
                 var result3 = JSON.parse(result2);
-                res.send("<button onClick=javascript:window.location.href=\""+result3.realUrl+"\">Continue to "+result3.realUrl+"</button>");
+                res.send("<html><head><title>URLshortener</title></head><body style=\"background-color: lightblue;\">"+
+                "</br></br></br><center><h2>You are being redirected to "+result3.realUrl+"</h2>"+
+                "<button onClick=javascript:window.location.href=\""+result3.realUrl+"\">Continue</button></center></body></html>");
 
             }
         });
@@ -157,6 +159,10 @@ routes.use('/api', apiRoutes);
 routes.get('/', function(req, res) {
     console.log(__dirname);
     res.sendFile('index.html', {'root': 'public/src'});
+});
+routes.get('/CSVpage', function(req, res) {
+       console.log(__dirname);
+       res.sendFile('csv_upload.html', {'root': 'public/src'});
 });
 routes.get('/css/style.css', function(req, res) {
     console.log(__dirname);

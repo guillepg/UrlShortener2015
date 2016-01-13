@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html>
 <head>
 	<title>URLshortener</title>
 
 	<!-- CSS imports -->
 	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.8.1/bootstrap-table.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
 	<!-- Javascript imports -->
@@ -14,12 +14,13 @@
 	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.8.1/bootstrap-table.js"></script>
+
 	<script src="js/home.js"></script>
 
 </head> 
 
 
-<body>
 	<!-- Navigation Bar -->
 	<div class="container">
 		<nav class="navbar navbar-inverse">
@@ -68,51 +69,94 @@
 		</div>
 	</div>
 
-	<!-- Short URL info bar -->
+	<!-- Short URL status info bar -->
 	<div class="container-full">
 		<div class="row">
 			<div class="col-lg-12 text-center">
 				<form class="col-lg-12" id="status" action="/api/stats">
 					<div class="input-group input-group-lg col-sm-offset-4 col-sm-4">
-						<input type="text" class="center-block form-control input-lg"
+						<input type="text" class="center-block form-control input-lg" id="corta"
 							title="Enter a shortened URL" placeholder="Enter a shortened URL" name="shortUrl">
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-12 text-center">
+				<!--<div class="col-sm-offset-4 col-sm-4 text-center">-->
 						<span class="input-group-btn">
-							<button class="btn btn-lg btn-primary" type="submit">Status</button>
+							<a id="getjson" class="btn btn-lg btn-primary" onclick="getJSON();">Get status JSON</a>
+							<a id="loginLink" class="btn btn-lg btn-primary" onclick="toggleTable();">Show status table</a>
 						</span>
-					</div>
-				</form>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-lg-12 text-center">
-				<div class="col-sm-offset-4 col-sm-4 text-center">
-					<br />
-				</div>
+					<table id="table" style="display:none">
+						<thead>
+						<tr>
+							<th data-field="shortedUrl">URL acortada</th>
+							<th data-field="realUrl">URL destino</th>
+							<th data-field="dateCreation">Fecha de creacion</th>
+							<th data-field="numberUses">Num. accesos</th>
+						</tr>
+						</thead>
+					</table>
+					<script>
+						$('#table').bootstrapTable({});
+						function toggleTable() {
+							var shrt = document.getElementById("corta").value;
+							var xmlhttp = new XMLHttpRequest();
+							var url = "http://localhost:3000/api/stats?shortUrl="+shrt;
+							xmlhttp.onreadystatechange = function() {
+								if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+									var myArr = JSON.parse(JSON.stringify(xmlhttp.responseText));
+									$('#table').bootstrapTable("append", JSON.parse(myArr));
+								}
+							};
+							xmlhttp.open("GET", url, false);
+							xmlhttp.send();
+
+							var lTable = document.getElementById("table");
+							lTable.style.display = (lTable.style.display == "table") ? "none" : "table";
+						}
+						function getJSON(){
+							var shrt = document.getElementById("corta").value;
+							var url = "http://localhost:3000/api/stats?shortUrl="+shrt;
+							window.location.href=url;
+						}
+					</script>
+				<!--</div>-->
 			</div>
 		</div>
 	</div>
-	
+
 	<!-- Upload CSV or type CSV content -->
-	<div class="container-full">
-		<div class="row">
-			<div class="col-lg-12 text-center">
-				<form class="col-lg-12" id="csv1" action="/api/shortCSV" method="POST">
-					<div class="input-group input-group-lg col-sm-offset-4 col-sm-4">
-						<h3>Upload a CSV file:</h3>
-						<input class="center-block form-control input-lg" type="file" name="file" accept=".csv">
-						<input class="btn btn-lg btn-primary" type="submit" value="Submit">
-					</div>
-				</form>
-				<form class="col-lg-12" id="csv2" action="/api/shortCSV" method="POST">
-					<div class="input-group input-group-lg col-sm-offset-4 col-sm-4">
-						<h3>Insert CSV text manually:</h3>
-						<textarea rows="5" cols="35" name="text"></textarea>
-						<input class="btn btn-lg btn-primary" type="submit" value="Submit"/>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
+</br></br></br>
+	<center>
+		<form id="redir" action="/CSVpage">
+			<span class="input-group-btn">
+				<button class="btn btn-lg btn-primary" type="submit">Go to CSV upload page</button>
+			</span>
+		</form>
+	</center>
+
+<!--<div class="container-full">
+    <div class="row">
+        <div class="col-lg-12 text-center">
+            <form class="col-lg-12" id="csv1" action="/api/shortCSV" method="POST">
+                <div class="input-group input-group-lg col-sm-offset-4 col-sm-4">
+                    <h3>Upload a CSV file:</h3>
+                    <input class="center-block form-control input-lg" type="file" name="file" accept=".csv">
+                    <input class="btn btn-lg btn-primary" type="submit" value="Submit">
+                </div>
+            </form>
+            <form class="col-lg-12" id="csv2" action="/api/shortCSV" method="POST">
+                <div class="input-group input-group-lg col-sm-offset-4 col-sm-4">
+                    <h3>Insert CSV text manually:</h3>
+                    <textarea rows="5" cols="55" name="text"></textarea>
+                    <input class="btn btn-lg btn-primary" type="submit" value="Submit"/>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>-->
 
 
 	<!-- Login -->
