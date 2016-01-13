@@ -119,7 +119,6 @@ apiRoutes.route('/shortCSV')
             for (index = 0; index < callback.length; ++index) {
                 output+="</br>PROBANDO "+callback[index];
                 testFunct(callback[index]);
-                output+=" salgo de test y reviso "+callback[index]+" - ";
                 db.findLong(callback[index],function(err, result){
                     if(err) output+=" ERR "+result;
                     else output+=" OK "+result;
