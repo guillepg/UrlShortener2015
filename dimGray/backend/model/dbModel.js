@@ -20,13 +20,13 @@ module.exports = {
         });
     },
     find: function(urlToFind, callback){
-        UrlDB.findOne({"shortedUrl": urlToFind}, function(err, res){
+        UrlDB.findOne({"shortedUrl": urlToFind},{_id:0, __v:0}, function(err, res){
             callback(err, res);
         });
     },
 
     findAll: function(callback){
-        UrlDB.find({}, function(err, res){
+        UrlDB.find({},{_id:0, __v:0}, function(err, res){
            callback(err,res)
         });
     }
