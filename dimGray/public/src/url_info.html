@@ -61,11 +61,28 @@
 		<script>
 			$('#table').bootstrapTable({});
 			function load(){
-				//$.getJSON('http://localhost:3000/api/stats?shortUrl=837e1ff8b5806c54e785bb9402f262a661f012dd', function(data) {});
-				var Httpreq = new XMLHttpRequest();
-				Httpreq.open("GET","http://localhost:3000/api/stats?shortUrl=837e1ff8b5806c54e785bb9402f262a661f012dd",true);
-				Httpreq.send();
-				var fich = Httpreq.responseText;
+				var xmlhttp = new XMLHttpRequest();
+				var url = "http://localhost:3000/api/stats?shortUrl=837e1ff8b5806c54e785bb9402f262a661f012dd";
+
+				xmlhttp.onreadystatechange = function() {
+					if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+						var myArr = JSON.parse(xmlhttp.responseText);
+						myFunction(myArr);
+					}
+				};
+				xmlhttp.open("GET", url, true);
+				xmlhttp.send();
+
+				function myFunction(arr) {
+					var out = "";
+					var i;
+					//JSON.parse(arr);
+					//FALLA AQUÍ POR EL CARACTER RARO QUE DEVUELVE MONGODB
+					$('#table').bootstrapTable("load", JSON.parse(arr));
+				}
+
+
+				//	http://localhost:3000/api/stats?shortUrl=837e1ff8b5806c54e785bb9402f262a661f012dd
 				var data = [{
 						short: 'bit.ly/1',
 						long: 'facebook.com',
@@ -78,8 +95,7 @@
 						date: '07/01/2016',
 						acc: 32,
 						status: 'No segura'
-					}]; 
-				$('#table').bootstrapTable("load", fich);
+					}];
 			}
 		</script>
 		</br></br>

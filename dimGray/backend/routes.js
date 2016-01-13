@@ -48,7 +48,7 @@ apiRoutes.route('/short')
 
         appFunctions.checkURL(realURL, function(shorted){
             //url valid
-            //appFunctions.safeBrowser(realURL,function(callback){
+            //appFunctions.safeBrowser(realURL,function(callback){ // FALLA SAFEBROWSING
                 //res.send(callback);
                 if(shorted!=500 && shorted!=404){
                     var shortedUrl = appFunctions.short(req.param("urlToShort"));
@@ -97,24 +97,53 @@ apiRoutes.route('/goto')
                 //http://localhost:3000/api/goto?shortUrl=e7847c6e7a9f533b763e949f66ca4ce867883bb0
                 var result2 = JSON.parse(result);
                 res.send(result2);
+                //FALLA AQUÍ POR EL CARACTER RARO QUE DEVUELVE MONGODB
             }
         });
     })
 
 apiRoutes.route('/shortCSV')
     .post(function(req,res){
-        var csvFile = req.body.csvFile;
-        //Just for test
-        var csvFile = "http://www.google.com,http://www.unizar.es";
+        var csvFile = "";
+        if(typeof req.body.file !== "undefined" ) csvFile=req.body.file;
+        else if(typeof req.body.text !== "undefined"  ) csvFile=req.body.text;
+        else res.send("EMPTY");
 
         appFunctions.getCSVArray(csvFile, function(callback){
             //use index for get what urls fail
-            var index;
-            var test = "";
+            var index; var resultbool = false; var resultstr = "";
+            var output = "CORRECTLY SHORTED: ";
             for (index = 0; index < callback.length; ++index) {
-                test += callback[index]+'\n';
+                appFunctions.checkURL(callback[index], function(shorted){
+                    //url valid
+                    //appFunctions.safeBrowser(callback[index],function(callback){ // FALLA SAFEBROWSING
+                        if(shorted!=500 && shorted!=404){
+                            var shortedUrl = appFunctions.short(callback[index]);
+                            var date = new Date();
+                            var json = {
+                                "realUrl":callback[index],
+                                "shortedUrl":shortedUrl,
+                                "dateCreation":date.toLocaleDateString('en-US'),
+                                "numberUses":1};
+                            db.add(json, function(err, result){
+                                //url already in DB
+                                if(err)
+                                    db.find(shortedUrl, function(err, result){
+                                        //unknow error
+                                        if(err) ;
+                                        else{output+="long:"+callback[index]+",short:"+shortedUrl;}
+                                        //devuelve info existente
+                                        //aqui sumaremos 1 al numero de usos
+                                    });
+                                //new url, not existing in DB
+                                else output+="long:"+callback[index]+",short:"+shortedUrl;
+                            });
+                        }
+                        else res.status(shorted).send("Error "+shorted)    //// MEJORAR
+                    //});
+                });
             }
-            res.send(test);
+            res.send(output);
         })
     })
 
