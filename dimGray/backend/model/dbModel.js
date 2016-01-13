@@ -20,9 +20,14 @@ module.exports = {
         });
     },
     find: function(urlToFind, callback){
-        UrlDB.findOne({"shortedUrl": urlToFind},{_id:0, __v:0}, function(err, res){
-            callback(err, res);
+        
+		UrlDB.update({"shortedUrl": urlToFind}, {$inc: { numberUses: 1 }}, {upsert: true}, function(err){
+			UrlDB.findOne({"shortedUrl": urlToFind},{_id:0, __v:0}, function(err, res){
+			
+			callback(err,res);
         });
+		})
+
     },
 
     findAll: function(callback){
