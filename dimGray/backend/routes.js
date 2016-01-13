@@ -95,9 +95,10 @@ apiRoutes.route('/goto')
             if(err) res.status(404).send("Error")
             else{
                 //http://localhost:3000/api/goto?shortUrl=e7847c6e7a9f533b763e949f66ca4ce867883bb0
-                var result2 = JSON.parse(result);
-                res.send(result2);
-                //FALLA AQUÍ POR EL CARACTER RARO QUE DEVUELVE MONGODB
+                var result2 = JSON.stringify(result);
+                var result3 = JSON.parse(result2);
+                res.send("<button onClick=javascript:window.location.href=\""+result3.realUrl+"\">Continue to "+result3.realUrl+"</button>");
+
             }
         });
     })
@@ -111,7 +112,7 @@ apiRoutes.route('/shortCSV')
 
         appFunctions.getCSVArray(csvFile, function(callback){
             //use index for get what urls fail
-            var index; var resultbool = false; var resultstr = "";
+            var index;
             var output = "CORRECTLY SHORTED: ";
             for (index = 0; index < callback.length; ++index) {
                 appFunctions.checkURL(callback[index], function(shorted){
