@@ -113,7 +113,7 @@ apiRoutes.route('/shortCSV')
         else res.send("EMPTY");
 
         appFunctions.getCSVArray(csvFile, function(callback){
-        res.send(callback);
+            res.send(callback);
         })
     })
 
