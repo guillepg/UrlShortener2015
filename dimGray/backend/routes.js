@@ -113,21 +113,26 @@ apiRoutes.route('/shortCSV')
         else res.send("EMPTY");
 
         appFunctions.getCSVArray(csvFile, function(callback){
-            //use index to get which urls fail
-            var index;
-            output+= "CORRECTLY SHORTED: ";
-            for (index = 0; index < callback.length; ++index) {
-                output+="</br>PROBANDO "+callback[index];
-                testFunct(callback[index]);
-                db.findLong(callback[index],function(err, result){
-                    if(err) ;
-                    else{   var jotason = result.shortedUrl; window.output+=jotason;}
-                });
-                output+=" END";
-            }
-            res.send(output);
+        res.send(callback);
         })
     })
+
+    /*OTRA FUNCION NUEVA:
+    var index;
+    //use index to get which urls fail
+    for (index = 0; index < callback.length; ++index) {
+        testFunct(callback[index]);
+        db.findLong(callback[index],function(err, result, callback){
+            if(err) ;
+            else{
+                var jotason = result;
+                callback( jotason );
+            }
+        });
+        output+=" END";
+    }
+    res.send(output);
+    */
 
 function testFunct(cadena){
     appFunctions.checkURL(cadena, function(shorted){

@@ -34,7 +34,6 @@ module.exports = {
             callback(err,res[0]);
         });
     },
-
     findAll: function(callback){
         UrlDB.find({},{_id:0, __v:0}, function(err, res){
            callback(err,res)
