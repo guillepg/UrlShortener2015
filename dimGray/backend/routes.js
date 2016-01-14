@@ -120,43 +120,10 @@ apiRoutes.route('/shortCSV')
                 output+="</br>PROBANDO "+callback[index];
                 testFunct(callback[index]);
                 db.findLong(callback[index],function(err, result){
-                    if(err) output+=" ERR "+result;
-                    else output+=" OK "+result;
+                    if(err) ;
+                    else{   var jotason = result.shortedUrl; window.output+=jotason;}
                 });
                 output+=" END";
-                /*---------------------------------
-                var longurl = ""+callback[index];
-                appFunctions.checkURL(longurl, function(shorted){
-                    output+=" VALID ";
-                    //url valid
-                    //appFunctions.safeBrowser(longurl,function(callback2){ // FALLA SAFEBROWSING
-                        if(shorted!=500 && shorted!=404){
-                            output+=" cod"+shorted;
-                            var shortedUrl = appFunctions.short(longurl);
-                            output+=" short"+shortedUrl;
-                            var date = new Date();
-                            var json = {
-                                "realUrl":longurl,
-                                "shortedUrl":shortedUrl,
-                                "dateCreation":date.toLocaleDateString('en-US'),
-                                "numberUses":1};
-                            db.add(json, function(err, result){
-                                //url already in DB
-                                if(err)
-                                    db.find(shortedUrl, function(err, result){
-                                        //unknow error
-                                        if(err) ;
-                                        else{output+="OK1";}
-                                        //devuelve info existente
-                                        //aqui sumaremos 1 al numero de usos
-                                    });
-                                //new url, not existing in DB
-                                else output+="OK2";
-                            });
-                        }
-                        else output+="Error 500 en "+longurl;//res.status(shorted).send("Error "+shorted)    //// MEJORAR
-                    //});
-                });*/
             }
             res.send(output);
         })
