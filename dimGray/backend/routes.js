@@ -48,9 +48,8 @@ apiRoutes.route('/short')
 
         appFunctions.checkURL(realURL, function(shorted){
             //url valid
-            //appFunctions.safeBrowser(realURL,function(callback){ // FALLA SAFEBROWSING
-                //res.send(callback);
-                if(shorted!=500 && shorted!=404){
+            appFunctions.safeBrowser(realURL,function(callback){ // FALLA SAFEBROWSING
+                if(shorted!=500 && shorted!=404 && callback.statusCode==400){
                     var shortedUrl = appFunctions.short(req.param("urlToShort"));
                     var date = new Date();
 
@@ -70,7 +69,7 @@ apiRoutes.route('/short')
                     });
                 }
                 else res.status(shorted).send("Error "+shorted)    //// MEJORAR
-            //});
+            });
 
         });
     })
@@ -94,7 +93,6 @@ apiRoutes.route('/goto')
              //url not in DB
             if(err) res.status(404).send("Error")
             else{
-                //http://localhost:3000/api/goto?shortUrl=e7847c6e7a9f533b763e949f66ca4ce867883bb0
                 var result2 = JSON.stringify(result);
                 var result3 = JSON.parse(result2);
                 res.send("<html><head><title>URLshortener</title></head><body style=\"background-color: lightblue;\">"+
@@ -116,44 +114,6 @@ apiRoutes.route('/shortCSV')
             res.send(callback);
         })
     })
-
-    /*OTRA FUNCION NUEVA:
-    var index;
-    //use index to get which urls fail
-    for (index = 0; index < callback.length; ++index) {
-        testFunct(callback[index]);
-        db.findLong(callback[index],function(err, result, callback){
-            if(err) ;
-            else{
-                var jotason = result;
-                callback( jotason );
-            }
-        });
-        output+=" END";
-    }
-    res.send(output);
-    */
-
-function testFunct(cadena){
-    appFunctions.checkURL(cadena, function(shorted){
-        //url valid
-        //appFunctions.safeBrowser(cadena,function(callback){ // FALLA SAFEBROWSING
-            if(shorted!=500 && shorted!=404){
-                var shortedUrl = appFunctions.short(cadena);
-                var date = new Date();
-                var json = {
-                    "realUrl":cadena,
-                    "shortedUrl":shortedUrl,
-                    "dateCreation":date.toLocaleDateString('en-US'),
-                    "numberUses":1};
-                db.add(json, function(err, result){
-                    //url already in DB
-                    if(err) db.find(shortedUrl, function(err, result){});
-                });
-            }
-        //});
-    });
-}
 
 /* GLOBAL ROUTES */
 // API endpoints go under '/api' route. Other routes are redirected to

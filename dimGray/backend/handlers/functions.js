@@ -5,6 +5,7 @@ var https = require('https');
 var express = require ('express');
 var config = require("../config");
 var CSVparse = require('csv-parse');
+var SafeBrowse = require('safe-browse');
 
 var checkURL = function(urlToCheck, callback){
 
@@ -23,19 +24,18 @@ var short = function(urlToShort){
     return crypto.createHash('sha1').update(urlToShort).digest('hex');
 };
 
-//Still not working fine
 var safeBrowser = function(urlToCheck, callback){
+    var apiSafebrowsing = new SafeBrowse.Api( config.APIKEY, {pver: "3.0", debug: true,
+    api: "https://sb-ssl.google.com/safebrowsing/api/lookup",client: "api", appver: "1.0"});
     if(urlToCheck.toString().substring(0,7) === "http://"){
-        var apikey = config.APIKEY
-        var url = "https://sb-ssl.google.com/safebrowsing/api/lookup?client=DimGray&key="+apikey+"&appver=1&pver=3.1&url="+urlToCheck;
-
-        https.get(url, function(res) {
-            res.on('data', function(d) {
-                callback(d.toString());
-            });
-        }).on('error', function(error){
-            callback("error 1"); //For the moment, must change
-        });
+        apiSafebrowsing.lookup(urlToCheck)
+            .on( 'success', function ( data ) {
+                callback(data);
+            } )
+            .on( 'error', function ( error ) {
+                console.log(error.message);
+                callback(error);
+            } );
     }
     else
         callback('notValidUrl');  //For the moment, must change
